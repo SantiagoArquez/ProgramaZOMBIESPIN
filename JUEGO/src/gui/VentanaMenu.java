@@ -1,0 +1,33 @@
+package src.gui;
+import javax.swing.*;
+
+public class VentanaMenu extends JFrame {
+
+    private JButton btnCrear;
+    private JButton btnListar;
+
+    public VentanaMenu() {
+        setTitle("Gestión de Jugadores");
+        setSize(400, 300); // Tamaño de la ventana
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        setLayout(null);
+
+        setLocationRelativeTo(null);
+
+        inicializarComponentes();
+    }
+
+    private void inicializarComponentes() {
+        btnCrear = new JButton("Crear Jugador");
+        btnCrear.setBounds(100, 60, 200, 40);
+        add(btnCrear);
+
+        // Botón Listar Jugadores
+        btnListar = new JButton("Listar Jugadores");
+        btnListar.setBounds(100, 130, 200, 40);
+        add(btnListar);
+
+        // --- EVENTOS ---
+    }
+}
