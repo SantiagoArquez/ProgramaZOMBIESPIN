@@ -1,5 +1,5 @@
-package src.operaciones;
+package operaciones;
 
 public class GuardarJugador {
-    
+
 }

@@ -1,5 +1,5 @@
-package src.gui;
+package gui;
 
 public class VentanaCargarPartida {
-    
+
 }

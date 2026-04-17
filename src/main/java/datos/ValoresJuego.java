@@ -1,5 +1,5 @@
-package src.datos;
+package datos;
 
 public class ValoresJuego {
-    
+
 }
