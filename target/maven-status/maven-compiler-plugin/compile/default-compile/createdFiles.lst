@@ -1,0 +1,10 @@
+src/datos/Niveles.class
+src/gui/VentanaMenu.class
+src/Main.class
+src/datos/Partidas.class
+src/datos/Jugador.class
+src/operaciones/GuardarJugador.class
+src/gui/VentanaDerrota.class
+src/datos/ValoresJuego.class
+src/operaciones/HabilitarBoton.class
+src/gui/VentanaCargarPartida.class
