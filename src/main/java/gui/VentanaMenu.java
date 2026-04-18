@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 
 import gui.VentanaJuego;
 import gui.VentanaCargarPartida;
+import datos.MusicaAdmi;
 import recursos.Fuentes;
 
 public class VentanaMenu extends JFrame {
@@ -25,6 +26,7 @@ public class VentanaMenu extends JFrame {
 
 
     public VentanaMenu() {
+        MusicaAdmi music=new MusicaAdmi();
         setTitle("ZOMBIEZPIN MENU PRINCIPAL");
         setSize(1020, 550);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -32,6 +34,7 @@ public class VentanaMenu extends JFrame {
         setLayout(null);
 
         inicializarComponentes();
+        music.Sonarmusica("/musica/Menu.wav");
     }
 
     private void inicializarComponentes() {
