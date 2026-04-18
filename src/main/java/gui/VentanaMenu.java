@@ -8,15 +8,18 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import recursos.Fuentes;
-import recursos.BordesRedondeados;
 
 public class VentanaMenu extends JFrame {
 
     private JButton nuevaPartida;
     private JButton continuar;
     private JLabel dedo;
+    private JTextField titulo;
+    private JTextField titulo2;
+
 
     public VentanaMenu() {
         setTitle("ZOMBIEZPIN MENU PRINCIPAL");
@@ -33,24 +36,44 @@ public class VentanaMenu extends JFrame {
         JPanel panel = new JPanel();
         panel.setLayout(null);
         panel.setBounds(0, 0, 1020, 550);
-        panel.setBackground(Color.decode("#eeeeee"));
+        panel.setBackground(Color.decode("#1e1e1e"));
+     
+        titulo = new JTextField("ZOMBIEZPIN");
+        titulo.setBounds(280, 40, 500, 90); // aquí controlas el tamaño real
+        titulo.setFont(Fuentes.loadFont("/fonts/StormGust.ttf", 100));
+        titulo.setForeground(Color.decode("#013501"));
+        titulo.setBackground(new Color(0,0,0,0)); //fondo transparente
+        titulo.setBorder(null); // quita borde tipo input
+        titulo.setEditable(false);
+        titulo.setFocusable(false);
+        titulo.setHorizontalAlignment(JTextField.CENTER);
+        panel.add(titulo);
 
-        nuevaPartida = new JButton("Nueva Partida");
+        titulo2 = new JTextField("ZOMBIEZPIN");
+        titulo2.setBounds(280, 43, 500, 90); // aquí controlas el tamaño real
+        titulo2.setFont(Fuentes.loadFont("/fonts/StormGust.ttf", 100));
+        titulo2.setForeground(Color.decode("#000000"));
+        titulo2.setBackground(new Color(0,0,0,0)); //fondo transparente
+        titulo2.setBorder(null); // quita borde tipo input
+        titulo2.setEditable(false);
+        titulo2.setFocusable(false);
+        titulo2.setHorizontalAlignment(JTextField.CENTER);
+        panel.add(titulo2);
+
+        nuevaPartida = new JButton("NUEVA PARTIDA");
         nuevaPartida.setBounds(420, 150, 200, 71);
-        nuevaPartida.setBackground(Color.decode("#ffffff"));
-        nuevaPartida.setForeground(Color.decode("#1b1b1b"));
-        nuevaPartida.setFont(Fuentes.loadFont("/fonts/Lexend.ttf", 21));
-        nuevaPartida.setBorder(BordesRedondeados.crear(15, Color.decode("#626262"), 1));
+        nuevaPartida.setBackground(Color.decode("#2e2e2e"));
+        nuevaPartida.setForeground(Color.decode("#277717"));
+        nuevaPartida.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 21));
         nuevaPartida.setFocusPainted(false);
         panel.add(nuevaPartida);
 
-        continuar = new JButton("Continuar");
-        continuar.setBounds(419, 275, 200, 71);
+        continuar = new JButton("CONTINUAR");
+        continuar.setBounds(420, 275, 200, 71);
         continuar.setEnabled(false);
-        continuar.setBackground(Color.decode("#ffffff"));
-        continuar.setForeground(Color.decode("#1b1b1b"));
-        continuar.setFont(Fuentes.loadFont("/fonts/Lexend.ttf", 21));
-        continuar.setBorder(BordesRedondeados.crear(15, Color.decode("#626262"), 1));
+        continuar.setBackground(Color.decode("#2e2e2e"));
+        continuar.setForeground(Color.decode("#277717"));
+        continuar.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 21));
         continuar.setFocusPainted(false);
         panel.add(continuar);
 
@@ -59,11 +82,12 @@ public class VentanaMenu extends JFrame {
             getClass().getResource("/images/mano.png")
         );
         Image img = icon.getImage().getScaledInstance(
-            150, 150, Image.SCALE_SMOOTH
+            230, 180, Image.SCALE_SMOOTH
         );
         dedo.setIcon(new ImageIcon(img));
-        dedo.setBounds(50, 50, 150, 150);
+        dedo.setBounds(645, 120, 230, 180);
         panel.add(dedo);
+
         add(panel);
     }
 }
