@@ -10,6 +10,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+
+import gui.VentanaJuego;
+import gui.VentanaCargarPartida;
 import recursos.Fuentes;
 
 public class VentanaMenu extends JFrame {
@@ -89,5 +92,17 @@ public class VentanaMenu extends JFrame {
         panel.add(dedo);
 
         add(panel);
+
+        //evento
+
+        nuevaPartida.addActionListener(e -> {
+        VentanaJuego juego = new VentanaJuego();
+        juego.setVisible(true);
+        });
+
+        continuar.addActionListener(e -> {
+        VentanaCargarPartida cargar = new VentanaCargarPartida();
+        cargar.setVisible(true);
+        });
     }
 }

@@ -1,5 +1,37 @@
 package gui;
 
-public class VentanaDerrota {
+import java.awt.Color;
+import java.awt.Image;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+
+import recursos.Fuentes;
+
+public class VentanaDerrota extends JFrame {
+
+    private JButton nuevaPartida;
+    private JButton continuar;
+    private JLabel dedo;
+    private JTextField titulo;
+    private JTextField titulo2;
+
+    public VentanaDerrota() {
+        setTitle("ZOMBIEZPIN MENU PRINCIPAL");
+        setSize(1020, 550);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setLayout(null);
+
+        inicializarComponentes();
+    }
+
+    private void inicializarComponentes() {
+
+}
 }
