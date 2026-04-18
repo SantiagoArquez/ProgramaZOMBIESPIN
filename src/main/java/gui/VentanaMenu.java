@@ -56,7 +56,7 @@ public class VentanaMenu extends JFrame {
 
         dedo = new JLabel();
         ImageIcon icon = new ImageIcon(
-            getClass().getResource("/images/miImagen.png")
+            getClass().getResource("/images/mano.png")
         );
         Image img = icon.getImage().getScaledInstance(
             150, 150, Image.SCALE_SMOOTH
