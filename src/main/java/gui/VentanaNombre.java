@@ -76,17 +76,19 @@ public class VentanaNombre extends JPanel {
         lblPin.setBorder(null);
         add(lblPin);
 
-        // ===== CAMPO PIN (OCULTO) =====
+        // ===== CAMPO PIN (VISIBLE) =====
         campoPin = new JPasswordField();
         campoPin.setBounds(130, 240, 220, 40);
         campoPin.setForeground(Color.decode("#277717"));
         campoPin.setBackground(Color.decode("#2e2e2e"));
-        campoPin.setBorder(null);campoPin.setBorder(
+        campoPin.setBorder(
             javax.swing.BorderFactory.createCompoundBorder(
             javax.swing.BorderFactory.createLineBorder(Color.decode("#277717"), 2),
             javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10)
-        )
-        ); 
+            )
+        );
+        campoPin.setEchoChar((char) 0);
+
         add(campoPin);
 
         
