@@ -1,7 +1,6 @@
-import gui.VentanaMenu;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 
+import gui.VentanaMenu;
 public class Main {
     public static void main(String[] args) {
         System.out.println("Inicio aplicación.");
