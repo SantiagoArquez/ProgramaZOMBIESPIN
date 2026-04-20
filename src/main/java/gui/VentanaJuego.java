@@ -24,10 +24,14 @@ public class VentanaJuego extends JPanel {
     private int[] resultadoFinal;
     private int slotW = 140;
     private int slotH = 200;
-    
 
-    public VentanaJuego(MusicaAdmi music) {
+    // NUEVO
+    private Jugador jugador;
+
+    // CONSTRUCTOR NUEVO (recibe jugador)
+    public VentanaJuego(MusicaAdmi music, Jugador jugador) {
         this.music = music;
+        this.jugador = jugador;
 
         setLayout(null);
         setBackground(Color.decode("#1e1e1e"));
@@ -39,10 +43,17 @@ public class VentanaJuego extends JPanel {
         music.Sonarmusica("/musica/Juego.wav");
     }
 
-    private void inicializarComponentes() {
+    // CONSTRUCTOR VIEJO
+    public VentanaJuego(MusicaAdmi music) {
+        this(music, null);
+    }
 
-        //donde se registra el jugador
-        Jugador jugador = new Jugador();
+    private void inicializarComponentes() {
+        if (jugador == null) {
+            jugador = new Jugador();
+        }
+       
+        if (jugador.getNombre() == null) {
         JDialog nomb = new JDialog((java.awt.Frame) null, "ZOMBIEZPIN - REGISTRO", true);
         nomb.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 
@@ -51,6 +62,7 @@ public class VentanaJuego extends JPanel {
         nomb.setSize(460, 420);
         nomb.setLocationRelativeTo(null);
         nomb.setVisible(true);
+}
 
         // PANEL PRINCIPAL DEL JUEGO
         JLabel img4 = new JLabel();
@@ -295,14 +307,23 @@ public class VentanaJuego extends JPanel {
                     img4.setIcon(getImagen(resultadoFinal[0]));
                     img5.setIcon(getImagen(resultadoFinal[1]));
                     img6.setIcon(getImagen(resultadoFinal[2]));
-                    boolean gano = (resultadoFinal[0] == resultadoFinal[1] &&
-                                    resultadoFinal[1] == resultadoFinal[2]);
-                    if (gano) {
-                        double ganancia = juego.calcularResultado(resultadoFinal[0], apuesta);
-                        jugador.setSaldo(jugador.getSaldo() + (int) ganancia);
-                    }
-                    saldoJLabel.setText(String.valueOf(jugador.getSaldo()));
+                    int a = resultadoFinal[0];
+                    int b = resultadoFinal[1];
+                    int c = resultadoFinal[2];
+                    double ganancia=0;
+                    if (a == b && b == c) {
+                    ganancia = juego.calcularResultado(a, apuesta);
+                    jugador.setSaldo(jugador.getSaldo() + (int) ganancia);
                     jugar.setEnabled(true);
+                }
+                // 2 iguales (premio 2)
+                else if (a == b) {
+                    ganancia = juego.calcularResultado2(a, apuesta);
+                    jugador.setSaldo(jugador.getSaldo() + (int) ganancia);
+                    jugar.setEnabled(true);
+                }
+                saldoJLabel.setText(String.valueOf(jugador.getSaldo()));
+                jugar.setEnabled(true);
                 }
             });
 

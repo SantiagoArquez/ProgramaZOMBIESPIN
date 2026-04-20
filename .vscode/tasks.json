@@ -1,0 +1,17 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run Java Application",
+			"type": "shell",
+			"command": "java",
+			"args": [
+				"-cp",
+				"target/classes:target/lib/*",
+				"Main"
+			],
+			"problemMatcher": [],
+			"group": "run"
+		}
+	]
+}

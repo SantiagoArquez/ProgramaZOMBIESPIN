@@ -6,25 +6,28 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import datos.Jugador;
 import datos.MusicaAdmi;
+import operaciones.OperacionesJugador;
 import recursos.Fuentes;
 
 public class VentanaNombre extends JPanel {
 
-    private JLabel titulo;
     private JLabel lblNombre;
     private JLabel lblPin;
     private JTextField campoNombre;
     private JPasswordField campoPin;
     private JButton btnValidar;
+
     private Jugador jugador;
 
     public VentanaNombre(MusicaAdmi music, Jugador jugador, String pin) {
+
         this.jugador = jugador;
 
         setLayout(null);
@@ -36,8 +39,6 @@ public class VentanaNombre extends JPanel {
 
     private void inicializarComponentes() {
 
-        // ===== TÍTULO =====
-        // TEXTO DE LA PANTALLA
         JLabel titulo = new JLabel("INGREZE ZU NOMBRE");
         titulo.setBounds(20, 100, 400, 90);
         titulo.setFont(Fuentes.loadFont("/fonts/StormGust.ttf", 50));
@@ -45,56 +46,47 @@ public class VentanaNombre extends JPanel {
         titulo.setHorizontalAlignment(JLabel.CENTER);
         add(titulo);
 
-        // ===== LABEL NOMBRE =====
         lblNombre = new JLabel("NOMBRE");
         lblNombre.setBounds(20, 180, 100, 40);
         lblNombre.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 18));
         lblNombre.setForeground(Color.decode("#277717"));
         lblNombre.setHorizontalAlignment(JLabel.CENTER);
-        lblNombre.setBorder(null);
         add(lblNombre);
 
-        // ===== CAMPO NOMBRE =====
         campoNombre = new JTextField();
         campoNombre.setBounds(130, 180, 220, 40);
         campoNombre.setForeground(Color.decode("#277717"));
         campoNombre.setBackground(Color.decode("#2e2e2e"));
         campoNombre.setHorizontalAlignment(JTextField.CENTER);
-        campoNombre.setBorder(null);campoNombre.setBorder(
+        campoNombre.setBorder(
             javax.swing.BorderFactory.createCompoundBorder(
-            javax.swing.BorderFactory.createLineBorder(Color.decode("#277717"), 2),
-            javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10)
-        )
-        ); 
+                javax.swing.BorderFactory.createLineBorder(Color.decode("#277717"), 2),
+                javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10)
+            )
+        );
         add(campoNombre);
 
-        // ===== LABEL PIN =====
         lblPin = new JLabel("PIN");
         lblPin.setBounds(20, 240, 100, 40);
         lblPin.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 18));
         lblPin.setForeground(Color.decode("#277717"));
         lblPin.setHorizontalAlignment(JLabel.CENTER);
-        lblPin.setBorder(null);
         add(lblPin);
 
-        // ===== CAMPO PIN (VISIBLE) =====
         campoPin = new JPasswordField();
         campoPin.setBounds(130, 240, 220, 40);
         campoPin.setForeground(Color.decode("#277717"));
         campoPin.setBackground(Color.decode("#2e2e2e"));
         campoPin.setHorizontalAlignment(JTextField.CENTER);
+        campoPin.setEchoChar((char) 0);
         campoPin.setBorder(
             javax.swing.BorderFactory.createCompoundBorder(
-            javax.swing.BorderFactory.createLineBorder(Color.decode("#277717"), 2),
-            javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10)
+                javax.swing.BorderFactory.createLineBorder(Color.decode("#277717"), 2),
+                javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10)
             )
         );
-        campoPin.setEchoChar((char) 0);
-
         add(campoPin);
 
-        
-        // ===== BOTÓN =====
         btnValidar = new JButton("NICKNAME");
         btnValidar.setBounds(130, 310, 220, 45);
         btnValidar.setEnabled(false);
@@ -104,7 +96,6 @@ public class VentanaNombre extends JPanel {
         btnValidar.setFocusPainted(false);
         add(btnValidar);
 
-        // ===== EVENTOS =====
         KeyAdapter escuchador = new KeyAdapter() {
             public void keyReleased(KeyEvent e) {
                 validarCampos();
@@ -126,17 +117,35 @@ public class VentanaNombre extends JPanel {
     }
 
     private void guardarJugadorYCerrar() {
-        String nombre = campoNombre.getText().trim();
+
+        String nombre = campoNombre.getText().trim().toUpperCase();
         String pin = new String(campoPin.getPassword()).trim();
 
-        jugador.setNombre(nombre);
-        jugador.setContrapin(pin);
+        //  BUSCAR SI YA EXISTE (ESTÁTICO)
+        Jugador existente = OperacionesJugador.buscarPorNombre(nombre);
 
-        System.out.println("Jugador: " + jugador.getNombre());
-        System.out.println("PIN guardado: " + jugador.getContrapin());
+        if (existente != null) {
+
+            if (existente.getContrapin().equals(pin)) {
+                jugador.setNombre(existente.getNombre());
+                jugador.setSaldo(existente.getSaldo());
+                jugador.setNivel(existente.getNivel());
+                jugador.setContrapin(existente.getContrapin());
+            } else {
+                JOptionPane.showMessageDialog(this, "PIN INCORRECTO");
+                return;
+            }
+
+        } else {
+            // Nuevo jugador
+            jugador.setNombre(nombre);
+            jugador.setContrapin(pin);
+
+            OperacionesJugador.agregar(jugador);
+        }
 
         java.awt.Window ventana =
-            javax.swing.SwingUtilities.getWindowAncestor(this);
+                javax.swing.SwingUtilities.getWindowAncestor(this);
 
         if (ventana != null) {
             ventana.dispose();
