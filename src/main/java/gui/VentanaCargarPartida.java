@@ -3,6 +3,7 @@ package gui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -41,7 +42,7 @@ public class VentanaCargarPartida extends JPanel {
 
     private void inicializarComponentes() {
 
-    
+        // ===== TÍTULO ESTILO ZOMBIE =====
         JLabel titulo = new JLabel("CARGAR PARTIDA");
         titulo.setBounds(25, 10, 550, 40);
         titulo.setForeground(Color.decode("#277717"));
@@ -95,7 +96,7 @@ public class VentanaCargarPartida extends JPanel {
         campoPin.setBorder(BorderFactory.createLineBorder(Color.decode("#277717")));
         add(campoPin);
 
-        
+        // ===== BOTÓN =====
         btnCargar = new JButton("CARGAR");
         btnCargar.setBounds(240, 300, 180, 45);
         btnCargar.setBackground(Color.decode("#2e2e2e"));

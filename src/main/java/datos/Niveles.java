@@ -6,6 +6,10 @@ public class Niveles {
     private int deuda;
 
     public Niveles(int nivel){
-        deuda=nivel*5000;
+        if (nivel==1){
+            deuda=20000;
+        }else{
+            deuda=nivel*200000;
+        }
     }
 }

@@ -121,7 +121,7 @@ public class VentanaNombre extends JPanel {
         String nombre = campoNombre.getText().trim().toUpperCase();
         String pin = new String(campoPin.getPassword()).trim();
 
-        //  BUSCAR SI YA EXISTE (ESTÁTICO)
+        // BUSCAR SI YA EXISTE (ESTÁTICO)
         Jugador existente = OperacionesJugador.buscarPorNombre(nombre);
 
         if (existente != null) {
@@ -141,7 +141,7 @@ public class VentanaNombre extends JPanel {
             jugador.setNombre(nombre);
             jugador.setContrapin(pin);
 
-            OperacionesJugador.agregar(jugador);
+            OperacionesJugador.guardar(jugador);
         }
 
         java.awt.Window ventana =

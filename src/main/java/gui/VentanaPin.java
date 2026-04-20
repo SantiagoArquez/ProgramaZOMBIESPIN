@@ -23,18 +23,22 @@ public class VentanaPin extends JDialog {
     }
 
     private void inicializarComponentes() {
+
         JLabel lbl = new JLabel("PIN DE LA PARTIDA");
         lbl.setBounds(60, 20, 200, 30);
         add(lbl);
+
         campoPin = new JPasswordField();
         campoPin.setBounds(60, 60, 180, 30);
         add(campoPin);
+
         JButton btn = new JButton("VALIDAR");
         btn.setBounds(90, 105, 120, 30);
         add(btn);
+
         btn.addActionListener(e -> validar());
     }
-    
+
     private void validar() {
 
         String pin = new String(campoPin.getPassword()).trim();

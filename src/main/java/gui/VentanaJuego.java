@@ -13,6 +13,8 @@ import javax.swing.JTextField;
 
 import datos.Jugador;
 import datos.MusicaAdmi;
+import datos.Niveles;
+import operaciones.OperacionesJugador;
 import operaciones.ValoresJuego;
 import recursos.Fuentes;
 
@@ -43,7 +45,7 @@ public class VentanaJuego extends JPanel {
         music.Sonarmusica("/musica/Juego.wav");
     }
 
-    // CONSTRUCTOR VIEJO
+    // CONSTRUCTOR VIEJO (para que todo siga funcionando igual)
     public VentanaJuego(MusicaAdmi music) {
         this(music, null);
     }
@@ -92,6 +94,13 @@ public class VentanaJuego extends JPanel {
         lblNivel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblNivel.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
         panelJ.add(lblNivel);
+
+        JLabel lblNivelValor = new JLabel(String.valueOf(jugador.getNivel()));
+        lblNivelValor.setBounds(950, 12, 80, 60);
+        lblNivelValor.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 30));
+        lblNivelValor.setForeground(Color.decode("#e688c6"));
+        panelJ.add(lblNivelValor);
+        
 
         // LABEL APUESTA (TEXTO FIJO) 
         JLabel lblApuesta = new JLabel("APUEZTA");
@@ -234,6 +243,13 @@ public class VentanaJuego extends JPanel {
         );
         panelJ.add(pagarDeuda);
 
+        Niveles nivelInfo = new Niveles(jugador.getNivel());
+        JLabel lblDeuda = new JLabel(String.valueOf(nivelInfo.getDeuda()));
+        lblDeuda.setBounds(625, 450, 250, 60);
+        lblDeuda.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 25));
+        lblDeuda.setForeground(Color.decode("#c8ff00"));
+        panelJ.add(lblDeuda);
+
         // ====== BOTÓN GUARDAR ======
         JButton guardar = new JButton("GUARDAR");
         guardar.setBounds(20, 420, 90, 25);
@@ -249,6 +265,11 @@ public class VentanaJuego extends JPanel {
         );
         panelJ.add(guardar);
 
+        guardar.addActionListener(e -> {
+        OperacionesJugador.guardar(jugador);
+        javax.swing.JOptionPane.showMessageDialog(this, "Partida guardada");
+        });
+
         // ====== BOTÓN MENU ======
         JButton meButton = new JButton("MENU");
         meButton.setBounds(20, 380, 90, 25);
@@ -263,13 +284,18 @@ public class VentanaJuego extends JPanel {
         )
         );
         panelJ.add(meButton);
+
+        meButton.addActionListener(e -> {
+        javax.swing.SwingUtilities.getWindowAncestor(this).dispose();
+        });
         
 
         // ABRIR VENTANA VALORES (JDialog)
         detalles.addActionListener(e -> {
-            VentanaValores v = new VentanaValores();
-            v.setVisible(true);
+        java.awt.Window owner = javax.swing.SwingUtilities.getWindowAncestor(this);
+            VentanaValores v = new VentanaValores(owner);
         }); 
+            
         // Funcionar Boton jugar
         jugar.addActionListener(e -> {
             jugar.setEnabled(false);
