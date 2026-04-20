@@ -44,7 +44,7 @@ public final class VentanaMenu extends JFrame {
         panel.setBackground(Color.decode("#1e1e1e"));
      
         titulo = new JTextField("ZOMBIEZPIN");
-        titulo.setBounds(260, 40, 500, 90); // aquí controlas el tamaño real
+        titulo.setBounds(240, 40, 500, 90); // aquí controlas el tamaño real
         titulo.setFont(Fuentes.loadFont("/fonts/StormGust.ttf", 100));
         titulo.setForeground(Color.decode("#013501"));
         titulo.setBackground(new Color(0,0,0,0)); //fondo transparente
@@ -55,7 +55,7 @@ public final class VentanaMenu extends JFrame {
         panel.add(titulo);
 
         titulo2 = new JTextField("ZOMBIEZPIN");
-        titulo2.setBounds(260, 43, 500, 90); // aquí controlas el tamaño real
+        titulo2.setBounds(240, 43, 500, 90); // aquí controlas el tamaño real
         titulo2.setFont(Fuentes.loadFont("/fonts/StormGust.ttf", 100));
         titulo2.setForeground(Color.decode("#000000"));
         titulo2.setBackground(new Color(0,0,0,0)); //fondo transparente
@@ -66,7 +66,7 @@ public final class VentanaMenu extends JFrame {
         panel.add(titulo2);
 
         nuevaPartida = new JButton("NUEVA PARTIDA");
-        nuevaPartida.setBounds(410, 180, 200, 71);
+        nuevaPartida.setBounds(380, 150, 200, 71);
         nuevaPartida.setBackground(Color.decode("#2e2e2e"));
         nuevaPartida.setForeground(Color.decode("#277717"));
         nuevaPartida.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 21));
@@ -74,8 +74,8 @@ public final class VentanaMenu extends JFrame {
         panel.add(nuevaPartida);
 
         continuar = new JButton("CONTINUAR");
-        continuar.setBounds(410, 320, 200, 71);
-        continuar.setEnabled(false);
+        continuar.setBounds(380, 275, 200, 71);
+        continuar.setEnabled(true);
         continuar.setBackground(Color.decode("#2e2e2e"));
         continuar.setForeground(Color.decode("#277717"));
         continuar.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 21));
@@ -90,7 +90,7 @@ public final class VentanaMenu extends JFrame {
             230, 180, Image.SCALE_SMOOTH
         );
         dedo.setIcon(new ImageIcon(img));
-        dedo.setBounds(605, 150, 230, 180);
+        dedo.setBounds(605, 120, 230, 180);
         panel.add(dedo);
 
         add(panel);
@@ -118,9 +118,16 @@ public final class VentanaMenu extends JFrame {
         jueDialog.setVisible(true);
         });
 
+         // ===== EVENTO CONTINUAR =====
         continuar.addActionListener(e -> {
-        VentanaCargarPartida cargar = new VentanaCargarPartida();
-        cargar.setVisible(true);
+            JDialog cargarDialog = new JDialog(this, "CARGAR PARTIDA", true);
+            VentanaCargarPartida cargar = new VentanaCargarPartida();
+            cargarDialog.setContentPane(cargar);
+ 
+            cargarDialog.setSize(460, 420);
+            cargarDialog.setLocationRelativeTo(null);
+ 
+            cargarDialog.setVisible(true);
         });
     }
 }

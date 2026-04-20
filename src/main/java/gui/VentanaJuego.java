@@ -13,11 +13,18 @@ import javax.swing.JTextField;
 
 import datos.Jugador;
 import datos.MusicaAdmi;
+import operaciones.ValoresJuego;
 import recursos.Fuentes;
 
 public class VentanaJuego extends JPanel {
 
     private MusicaAdmi music;
+    private javax.swing.Timer animacion;
+    private int contador = 0;
+    private int[] resultadoFinal;
+    private int slotW = 140;
+    private int slotH = 200;
+    
 
     public VentanaJuego(MusicaAdmi music) {
         this.music = music;
@@ -46,36 +53,48 @@ public class VentanaJuego extends JPanel {
         nomb.setVisible(true);
 
         // PANEL PRINCIPAL DEL JUEGO
-        JPanel panelJ = new JPanel();
+        JLabel img4 = new JLabel();
+        JLabel img5 = new JLabel();
+        JLabel img6 = new JLabel();
+        JPanel panelJ = new JPanel() {
+
+            private Image fondoOriginal = new ImageIcon(
+                getClass().getResource("/images/Tragamonedas.png")
+            ).getImage();
+            private Image fondoEscalado = fondoOriginal.getScaledInstance(1020, 550, Image.SCALE_SMOOTH);
+            @Override
+            protected void paintComponent(java.awt.Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(fondoEscalado, 0, 0, this);
+            }
+        };
         panelJ.setLayout(null);
         panelJ.setBounds(0, 0, 1020, 550);
-        panelJ.setBackground(Color.decode("#1e1e1e"));
         add(panelJ);
 
         // LABEL NIVEL (TEXTO FIJO) 
         JLabel lblNivel = new JLabel("NIVEL №");
-        lblNivel.setBounds(800, 20, 135, 60);
-        lblNivel.setFont(Fuentes.loadFont("/fonts/StormGust.ttf", 40));
-        lblNivel.setForeground(Color.decode("#277717"));
+        lblNivel.setBounds(790, 10, 145, 60);
+        lblNivel.setFont(Fuentes.loadFont("/fonts/StormGust.ttf", 42));
+        lblNivel.setForeground(Color.decode("#e688c6"));
         lblNivel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblNivel.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
         panelJ.add(lblNivel);
 
-
         // LABEL APUESTA (TEXTO FIJO) 
         JLabel lblApuesta = new JLabel("APUEZTA");
-        lblApuesta.setBounds(800, 70, 135, 60);
+        lblApuesta.setBounds(820, 80, 135, 60);
         lblApuesta.setFont(Fuentes.loadFont("/fonts/StormGust.ttf", 40));
-        lblApuesta.setForeground(Color.decode("#277717"));
+        lblApuesta.setForeground(Color.decode("#c8ff00"));
         lblApuesta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblApuesta.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
         panelJ.add(lblApuesta);
 
         // LABEL APUESTAMINIMA (TEXTO FIJO) 
         JLabel lblApuestaM = new JLabel("APUEZTA MINIMA  10");
-        lblApuestaM.setBounds(800, 160, 130, 60);
+        lblApuestaM.setBounds(820, 160, 130, 60);
         lblApuestaM.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 13));
-        lblApuestaM.setForeground(Color.decode("#277717"));
+        lblApuestaM.setForeground(Color.decode("#c8ff00"));
         lblApuestaM.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblApuestaM.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
         panelJ.add(lblApuestaM);
@@ -91,7 +110,7 @@ public class VentanaJuego extends JPanel {
             20, 20, Image.SCALE_SMOOTH
         );
         sol.setIcon(new ImageIcon(img));
-        sol.setBounds(930, 178, 20, 20);
+        sol.setBounds(950, 178, 20, 20);
         panelJ.add(sol);
 
         //SOL DE CANTIDAD
@@ -103,7 +122,7 @@ public class VentanaJuego extends JPanel {
             50, 50, Image.SCALE_SMOOTH
         );
         sol2.setIcon(new ImageIcon(img2));
-        sol2.setBounds(20, 20, 50, 50);
+        sol2.setBounds(10, 20, 50, 50);
         panelJ.add(sol2);
 
         //SOL DE DEUDA
@@ -115,27 +134,30 @@ public class VentanaJuego extends JPanel {
             50, 50, Image.SCALE_SMOOTH
         );
         sol3.setIcon(new ImageIcon(img3));
-        sol3.setBounds(680, 453, 50, 50);
+        sol3.setBounds(700, 453, 50, 50);
         panelJ.add(sol3);
 
 
         // ====== CAMPO DONDE EL USUARIO ESCRIBE ======
         JTextField valorApuesta = new JTextField();
-        valorApuesta.setBounds(800, 130, 150, 40);
-        valorApuesta.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 15));
-        valorApuesta.setForeground(Color.decode("#277717"));
+        valorApuesta.setBounds(810, 130, 150, 40);
+        valorApuesta.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 20));
+        valorApuesta.setForeground(Color.decode("#e688c6"));
         valorApuesta.setBackground(Color.decode("#2e2e2e"));
+        //CENTRAR TEXTO
+        valorApuesta.setHorizontalAlignment(JTextField.CENTER);
+
         valorApuesta.setBorder(null);valorApuesta.setBorder(
             javax.swing.BorderFactory.createCompoundBorder(
-            javax.swing.BorderFactory.createLineBorder(Color.decode("#277717"), 2),
-            javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10)
+            javax.swing.BorderFactory.createLineBorder(Color.decode("#c8ff00"), 2),
+            javax.swing.BorderFactory.createEmptyBorder(0, 10, -10, 10)
         )
         ); 
         panelJ.add(valorApuesta);
 
         // ====== BOTÓN JUGAR ======
         JButton jugar = new JButton("JUGAR");
-        jugar.setBounds(800, 240, 150, 80);
+        jugar.setBounds(810, 240, 150, 150);
         jugar.setBackground(Color.decode("#2e2e2e"));
         jugar.setForeground(Color.decode("#277717"));
         jugar.setBorder(null);jugar.setBorder(
@@ -148,53 +170,160 @@ public class VentanaJuego extends JPanel {
         jugar.setFocusPainted(false);
         panelJ.add(jugar);
 
+        //medidas de los iconos
+        img4.setBounds(270, 190, slotW, slotH);
+        img5.setBounds(440, 190, slotW, slotH);
+        img6.setBounds(600, 190, slotW, slotH);
+
+        panelJ.add(img4);
+        panelJ.add(img5);
+        panelJ.add(img6);
+
         // ====== BOTÓN DETALLES ======
         JButton detalles = new JButton("----");
-        detalles.setBounds(20, 450, 50, 50);
+        detalles.setBounds(20, 460, 40, 40);
         detalles.setBackground(Color.decode("#2e2e2e"));
-        detalles.setForeground(Color.decode("#277717"));
-        detalles.setFont(Fuentes.loadFont("/fonts/StormGust.ttf", 40));
+        detalles.setForeground(Color.decode("#299c4f"));
+        detalles.setFont(Fuentes.loadFont("/fonts/StormGust.ttf", 15));
         detalles.setFocusPainted(false);
         panelJ.add(detalles);
 
+        // LABEL SALDO MOSTRAR (TEXTO VARIABLE) 
+        JLabel saldoJLabel = new JLabel();
+        saldoJLabel.setText(String.valueOf(jugador.getSaldo()));
+        saldoJLabel.setBounds(30, 20, 140, 60);
+        saldoJLabel.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 30));
+        saldoJLabel.setForeground(Color.decode("#c8ff00"));
+        saldoJLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        saldoJLabel.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
+        panelJ.add(saldoJLabel);
+
         // LABEL DETALLES (TEXTO FIJO) 
         JLabel lblDetalles = new JLabel("DETALLEZ");
-        lblDetalles.setBounds(35, 445, 240, 60);
-        lblDetalles.setFont(Fuentes.loadFont("/fonts/StormGust.ttf", 40));
-        lblDetalles.setForeground(Color.decode("#277717"));
+        lblDetalles.setBounds(15, 450, 225, 60);
+        lblDetalles.setFont(Fuentes.loadFont("/fonts/StormGust.ttf", 30));
+        lblDetalles.setForeground(Color.decode("#299c4f"));
         lblDetalles.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblDetalles.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
         panelJ.add(lblDetalles);
 
-
-        // LABEL DEUDA (TEXTO FIJO) 
-        JLabel lblDeuda = new JLabel("DEUDA A PAGAR:");
-        lblDeuda.setBounds(250, 445, 280, 60);
-        lblDeuda.setFont(Fuentes.loadFont("/fonts/StormGust.ttf", 40));
-        lblDeuda.setForeground(Color.decode("#277717"));
-        lblDeuda.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblDeuda.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
-        panelJ.add(lblDeuda);
-
-
         // ====== BOTÓN PAGAR DEUDA ======
         JButton pagarDeuda = new JButton("PAGAR DEUDA");
-        pagarDeuda.setBounds(735, 450, 250, 50);
+        pagarDeuda.setBounds(765, 450, 200, 50);
         pagarDeuda.setBackground(Color.decode("#2e2e2e"));
-        pagarDeuda.setForeground(Color.decode("#277717"));
-        pagarDeuda.setFont(Fuentes.loadFont("/fonts/StormGust.ttf", 40));
+        pagarDeuda.setForeground(Color.decode("#299c4f"));
+        pagarDeuda.setFont(Fuentes.loadFont("/fonts/StormGust.ttf", 30));
         pagarDeuda.setFocusPainted(false);
+        pagarDeuda.setBorder(null);pagarDeuda.setBorder(
+            javax.swing.BorderFactory.createCompoundBorder(
+            javax.swing.BorderFactory.createLineBorder(Color.decode("#299c4f"), 2),
+            javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10)
+        )
+        );
         panelJ.add(pagarDeuda);
 
         // ====== BOTÓN GUARDAR ======
         JButton guardar = new JButton("GUARDAR");
-        guardar.setBounds(20, 390, 90, 25);
+        guardar.setBounds(20, 420, 90, 25);
         guardar.setBackground(Color.decode("#2e2e2e"));
-        guardar.setForeground(Color.decode("#277717"));
+        guardar.setForeground(Color.decode("#00bdbd"));
         guardar.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 10));
         guardar.setFocusPainted(false);
+                guardar.setBorder(null);guardar.setBorder(
+            javax.swing.BorderFactory.createCompoundBorder(
+            javax.swing.BorderFactory.createLineBorder(Color.decode("#00bdbd"), 2),
+            javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10)
+        )
+        );
         panelJ.add(guardar);
 
+        // ====== BOTÓN MENU ======
+        JButton meButton = new JButton("MENU");
+        meButton.setBounds(20, 380, 90, 25);
+        meButton.setBackground(Color.decode("#2e2e2e"));
+        meButton.setForeground(Color.decode("#e688c6"));
+        meButton.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 10));
+        meButton.setFocusPainted(false);
+                meButton.setBorder(null);meButton.setBorder(
+            javax.swing.BorderFactory.createCompoundBorder(
+            javax.swing.BorderFactory.createLineBorder(Color.decode("#e688c6"), 2),
+            javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10)
+        )
+        );
+        panelJ.add(meButton);
+        
 
+        // ABRIR VENTANA VALORES (JDialog)
+        detalles.addActionListener(e -> {
+            VentanaValores v = new VentanaValores();
+            v.setVisible(true);
+        }); 
+        // Funcionar Boton jugar
+        jugar.addActionListener(e -> {
+            jugar.setEnabled(false);
+            String veri = valorApuesta.getText();
+                if (veri == null || veri.trim().isEmpty()) {
+                    jugar.setEnabled(true);
+                    return;
+                }
+            double apuesta;
+            try {
+                apuesta = Double.parseDouble(valorApuesta.getText());
+            } catch (Exception ex) {
+                return;
+            }
+
+            if ((apuesta<10)||(jugador.getSaldo() < apuesta)){ 
+                jugar.setEnabled(true);
+                return;
+            }
+            jugador.setSaldo(jugador.getSaldo() - (int) apuesta);
+            saldoJLabel.setText(String.valueOf(jugador.getSaldo()));
+            ValoresJuego juego = new ValoresJuego();
+            resultadoFinal = juego.jugar();
+            contador = 0;
+            animacion = new javax.swing.Timer(120, ev -> {
+                int r1 = (int)(Math.random() * 4) + 1;
+                int r2 = (int)(Math.random() * 4) + 1;
+                int r3 = (int)(Math.random() * 4) + 1;
+                img4.setIcon(getImagen(r1));
+                img5.setIcon(getImagen(r2));
+                img6.setIcon(getImagen(r3));
+                contador++;
+                if (contador >= 10) {
+                    animacion.stop();
+                    img4.setIcon(getImagen(resultadoFinal[0]));
+                    img5.setIcon(getImagen(resultadoFinal[1]));
+                    img6.setIcon(getImagen(resultadoFinal[2]));
+                    boolean gano = (resultadoFinal[0] == resultadoFinal[1] &&
+                                    resultadoFinal[1] == resultadoFinal[2]);
+                    if (gano) {
+                        double ganancia = juego.calcularResultado(resultadoFinal[0], apuesta);
+                        jugador.setSaldo(jugador.getSaldo() + (int) ganancia);
+                    }
+                    saldoJLabel.setText(String.valueOf(jugador.getSaldo()));
+                    jugar.setEnabled(true);
+                }
+            });
+
+            animacion.start();
+        });
+    }
+private ImageIcon getImagen(int valor) {
+
+    return switch (valor) {
+
+        case 1 -> escalar("/images/girasol.png", slotW, slotH);
+        case 2 -> escalar("/images/hongo.png", slotW, slotH);
+        case 3 -> escalar("/images/michael.png", slotW, slotH);
+        case 4 -> escalar("/images/faraon.png", slotW, slotH);
+
+        default -> null;
+    };
+}
+    private ImageIcon escalar(String ruta, int w, int h) {
+        ImageIcon icon = new ImageIcon(getClass().getResource(ruta));
+        Image img = icon.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
+        return new ImageIcon(img);
     }
 }

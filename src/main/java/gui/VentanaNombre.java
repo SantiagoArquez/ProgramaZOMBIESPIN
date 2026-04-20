@@ -59,6 +59,7 @@ public class VentanaNombre extends JPanel {
         campoNombre.setBounds(130, 180, 220, 40);
         campoNombre.setForeground(Color.decode("#277717"));
         campoNombre.setBackground(Color.decode("#2e2e2e"));
+        campoNombre.setHorizontalAlignment(JTextField.CENTER);
         campoNombre.setBorder(null);campoNombre.setBorder(
             javax.swing.BorderFactory.createCompoundBorder(
             javax.swing.BorderFactory.createLineBorder(Color.decode("#277717"), 2),
@@ -81,6 +82,7 @@ public class VentanaNombre extends JPanel {
         campoPin.setBounds(130, 240, 220, 40);
         campoPin.setForeground(Color.decode("#277717"));
         campoPin.setBackground(Color.decode("#2e2e2e"));
+        campoPin.setHorizontalAlignment(JTextField.CENTER);
         campoPin.setBorder(
             javax.swing.BorderFactory.createCompoundBorder(
             javax.swing.BorderFactory.createLineBorder(Color.decode("#277717"), 2),

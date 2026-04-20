@@ -5,7 +5,7 @@ import lombok.Setter;
 @Getter
 public class Jugador {
     private String nombre;
-    private int saldo;
-    private int nivel;
+    private int saldo=2000;
+    private int nivel=1;
     private String contrapin;
 }
