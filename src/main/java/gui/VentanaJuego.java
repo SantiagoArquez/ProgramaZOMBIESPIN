@@ -246,41 +246,35 @@ public class VentanaJuego extends JPanel {
         //Deuda Label
         Niveles nivelInfo = new Niveles(jugador.getNivel());
         lblDeuda = new JLabel(String.valueOf(nivelInfo.getDeuda()));
-        lblDeuda.setBounds(625, 450, 250, 60);
+        lblDeuda.setBounds(550, 450, 250, 60);
         lblDeuda.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 25));
         lblDeuda.setForeground(Color.decode("#c8ff00"));
         panelJ.add(lblDeuda);
 
         pagarDeuda.addActionListener(e -> {
-            // CAMBIO: Usa un nombre diferente, por ejemplo 'infoActual'
-            Niveles infoActual = new Niveles(jugador.getNivel()); 
-            
-            int deuda = infoActual.getDeuda();
-            
+            // 1. Primero calculamos la deuda actual para validar si puede pagar
+            Niveles nivelActual = new Niveles(jugador.getNivel());
+            int deuda = nivelActual.getDeuda();
             if (jugador.getSaldo() < deuda) {
                 javax.swing.JOptionPane.showMessageDialog(this,
-                        "No tienes suficiente saldo para pagar la deuda");
+                        "No tienes suficiente saldo para pagar la deuda de " + deuda);
                 return;
             }
-            
-            // 💸 pagar deuda
+            // 2. Ejecutamos la lógica de pago y subida de nivel
             jugador.setSaldo(jugador.getSaldo() - deuda);
-            // 📈 subir nivel
-            jugador.setNivel(jugador.getNivel() + 1);
-            // 💾 guardar
+            jugador.setNivel(jugador.getNivel() + 1); // Ahora el jugador es nivel N+1
             OperacionesJugador.guardar(jugador);
-            
-            // 🔄 actualizar UI
-            // Usamos 'infoActual' para actualizar el nuevo valor
+            // 3. IMPORTANTE: Creamos una nueva instancia con el NUEVO nivel 
+            // para obtener el cálculo de la deuda siguiente
+            Niveles siguienteNivel = new Niveles(jugador.getNivel());
+            // 4. Actualizamos la UI con los valores post-cambio
             saldoJLabel.setText(String.valueOf(jugador.getSaldo()));
             lblNivelValor.setText(String.valueOf(jugador.getNivel()));
-            lblDeuda.setText(String.valueOf(infoActual.getDeuda())); // Usando la variable correcta
-            
+            lblDeuda.setText(String.valueOf(siguienteNivel.getDeuda())); // <- Aquí ya tienes el valor nuevo
             panelJ.revalidate();
             panelJ.repaint();
-            
             javax.swing.JOptionPane.showMessageDialog(this,
-                    "Subiste de nivel 🔥 ahora eres nivel " + jugador.getNivel());
+                    "¡Subiste de nivel! Ahora eres nivel " + jugador.getNivel());
         });
     
 
