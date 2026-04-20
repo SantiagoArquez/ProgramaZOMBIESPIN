@@ -26,7 +26,8 @@ public class VentanaJuego extends JPanel {
     private int[] resultadoFinal;
     private int slotW = 140;
     private int slotH = 200;
-
+    private JLabel lblDeuda;
+    
     // NUEVO
     private Jugador jugador;
 
@@ -34,13 +35,13 @@ public class VentanaJuego extends JPanel {
     public VentanaJuego(MusicaAdmi music, Jugador jugador) {
         this.music = music;
         this.jugador = jugador;
-
+        
         setLayout(null);
         setBackground(Color.decode("#1e1e1e"));
 
         Dimension d = new Dimension(1020, 550);
         setPreferredSize(d);
-
+        
         inicializarComponentes();
         music.Sonarmusica("/musica/Juego.wav");
     }
@@ -121,7 +122,6 @@ public class VentanaJuego extends JPanel {
         panelJ.add(lblApuestaM);
 
         
-
         //SOL DE APUESTA MINIMA
         JLabel sol = new JLabel();
         ImageIcon icon = new ImageIcon(
@@ -243,12 +243,46 @@ public class VentanaJuego extends JPanel {
         );
         panelJ.add(pagarDeuda);
 
+        //Deuda Label
         Niveles nivelInfo = new Niveles(jugador.getNivel());
-        JLabel lblDeuda = new JLabel(String.valueOf(nivelInfo.getDeuda()));
+        lblDeuda = new JLabel(String.valueOf(nivelInfo.getDeuda()));
         lblDeuda.setBounds(625, 450, 250, 60);
         lblDeuda.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 25));
         lblDeuda.setForeground(Color.decode("#c8ff00"));
         panelJ.add(lblDeuda);
+
+        pagarDeuda.addActionListener(e -> {
+            // CAMBIO: Usa un nombre diferente, por ejemplo 'infoActual'
+            Niveles infoActual = new Niveles(jugador.getNivel()); 
+            
+            int deuda = infoActual.getDeuda();
+            
+            if (jugador.getSaldo() < deuda) {
+                javax.swing.JOptionPane.showMessageDialog(this,
+                        "No tienes suficiente saldo para pagar la deuda");
+                return;
+            }
+            
+            // 💸 pagar deuda
+            jugador.setSaldo(jugador.getSaldo() - deuda);
+            // 📈 subir nivel
+            jugador.setNivel(jugador.getNivel() + 1);
+            // 💾 guardar
+            OperacionesJugador.guardar(jugador);
+            
+            // 🔄 actualizar UI
+            // Usamos 'infoActual' para actualizar el nuevo valor
+            saldoJLabel.setText(String.valueOf(jugador.getSaldo()));
+            lblNivelValor.setText(String.valueOf(jugador.getNivel()));
+            lblDeuda.setText(String.valueOf(infoActual.getDeuda())); // Usando la variable correcta
+            
+            panelJ.revalidate();
+            panelJ.repaint();
+            
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Subiste de nivel 🔥 ahora eres nivel " + jugador.getNivel());
+        });
+    
 
         // ====== BOTÓN GUARDAR ======
         JButton guardar = new JButton("GUARDAR");
