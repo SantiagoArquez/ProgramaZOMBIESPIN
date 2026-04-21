@@ -42,10 +42,21 @@ public final class VentanaMenu extends JFrame {
 
     private void inicializarComponentes() {
 
-        JPanel panel = new JPanel();
-        panel.setLayout(null);
-        panel.setBounds(0, 0, 1020, 550);
-        panel.setBackground(Color.decode("#1e1e1e"));
+        JPanel panelJ = new JPanel() {
+
+            private Image fondoOriginal = new ImageIcon(
+                getClass().getResource("/images/Menu.png")
+            ).getImage();
+            private Image fondoEscalado = fondoOriginal.getScaledInstance(1020, 550, Image.SCALE_SMOOTH);
+            @Override
+            protected void paintComponent(java.awt.Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(fondoEscalado, 0, 0, this);
+            }
+        };
+        panelJ.setLayout(null);
+        panelJ.setBounds(0, 0, 1020, 550);
+        add(panelJ);
 
         // ===== TITULO =====
         titulo = new JTextField("ZOMBIEZPIN");
@@ -57,7 +68,7 @@ public final class VentanaMenu extends JFrame {
         titulo.setEditable(false);
         titulo.setFocusable(false);
         titulo.setHorizontalAlignment(JTextField.CENTER);
-        panel.add(titulo);
+        panelJ.add(titulo);
 
         titulo2 = new JTextField("ZOMBIEZPIN");
         titulo2.setBounds(240, 43, 500, 90);
@@ -68,7 +79,7 @@ public final class VentanaMenu extends JFrame {
         titulo2.setEditable(false);
         titulo2.setFocusable(false);
         titulo2.setHorizontalAlignment(JTextField.CENTER);
-        panel.add(titulo2);
+        panelJ.add(titulo2);
 
         // ===== BOTON NUEVA PARTIDA =====
         nuevaPartida = new JButton("NUEVA PARTIDA");
@@ -77,7 +88,7 @@ public final class VentanaMenu extends JFrame {
         nuevaPartida.setForeground(Color.decode("#277717"));
         nuevaPartida.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 21));
         nuevaPartida.setFocusPainted(false);
-        panel.add(nuevaPartida);
+        panelJ.add(nuevaPartida);
 
         // ===== BOTON CONTINUAR =====
         continuar = new JButton("CONTINUAR");
@@ -86,7 +97,7 @@ public final class VentanaMenu extends JFrame {
         continuar.setForeground(Color.decode("#277717"));
         continuar.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 21));
         continuar.setFocusPainted(false);
-        panel.add(continuar);
+        panelJ.add(continuar);
 
         // ===== DEDO =====
         dedo = new JLabel();
@@ -95,9 +106,9 @@ public final class VentanaMenu extends JFrame {
         dedo.setIcon(new ImageIcon(img));
 
         dedo.setBounds(dedoXBase, dedoYBase, 230, 180);
-        panel.add(dedo);
+        panelJ.add(dedo);
 
-        add(panel);
+        add(panelJ);
 
         // =========================
         // EVENTOS DEL DEDO
