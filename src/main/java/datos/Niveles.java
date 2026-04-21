@@ -9,7 +9,7 @@ public class Niveles {
         if (nivel==1){
             deuda=20000;
         }else{
-            deuda=nivel*20000;
+            deuda=nivel*200000;
         }
     }
 }

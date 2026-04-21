@@ -21,11 +21,11 @@ public final class VentanaMenu extends JFrame {
     private JLabel dedo;
     private JTextField titulo;
     private JTextField titulo2;
-    private MusicaAdmi music = new MusicaAdmi();
+    private MusicaAdmi music = MusicaAdmi.getInstance();
 
     // posición base del dedo
     private final int dedoXBase = 605;
-    private final int dedoYBase = 120;
+    private final int dedoYBase = 100;
 
     public VentanaMenu() {
         setTitle("ZOMBIEZPIN MENU PRINCIPAL");
@@ -106,7 +106,7 @@ public final class VentanaMenu extends JFrame {
         nuevaPartida.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseEntered(java.awt.event.MouseEvent e) {
-                moverDedo(605, 120);
+                moverDedo(605, 100);
             }
 
             @Override
@@ -118,7 +118,7 @@ public final class VentanaMenu extends JFrame {
         continuar.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseEntered(java.awt.event.MouseEvent e) {
-                moverDedo(605, 245);
+                moverDedo(605, 225);
             }
 
             @Override
@@ -144,11 +144,13 @@ public final class VentanaMenu extends JFrame {
             jueDialog.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
                 public void windowClosed(java.awt.event.WindowEvent e) {
+                    music.detenerMusica();
                     music.Sonarmusica("/musica/Menu.wav");
                 }
 
                 @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
+                    music.detenerMusica();
                     music.Sonarmusica("/musica/Menu.wav");
                 }
             });
@@ -163,6 +165,19 @@ public final class VentanaMenu extends JFrame {
 
             cargarDialog.setSize(460, 420);
             cargarDialog.setLocationRelativeTo(null);
+                cargarDialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosed(java.awt.event.WindowEvent e) {
+                    music.detenerMusica();
+                    music.Sonarmusica("/musica/Menu.wav");
+                }
+
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent e) {
+                    music.detenerMusica();
+                    music.Sonarmusica("/musica/Menu.wav");
+                }
+            });
 
             cargarDialog.setVisible(true);
         });

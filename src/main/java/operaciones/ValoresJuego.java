@@ -33,7 +33,7 @@ public class ValoresJuego {
         default -> 0;
         };
     }
-        public double calcularResultado2(int Doble,double apuesta){
+    public double calcularResultado2(int Doble,double apuesta){
     return switch (Doble) {
         case 1 -> apuesta + (apuesta * 3); //El giraaa
         case 2 -> apuesta + (apuesta * 2); // El HONGO

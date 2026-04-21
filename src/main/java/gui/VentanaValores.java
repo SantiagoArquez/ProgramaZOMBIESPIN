@@ -3,6 +3,7 @@ package gui;
 import java.awt.Color;
 import java.awt.Window;
 
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -10,7 +11,9 @@ import javax.swing.JPanel;
 import recursos.Fuentes;
 
 public final class VentanaValores extends JDialog {
-
+    
+    private JLabel fondo;
+    private JButton menu;
     public VentanaValores(Window parent) {
         super(parent);
         setTitle("ZOMBIEZPIN VALORES");

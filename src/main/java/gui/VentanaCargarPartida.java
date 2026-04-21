@@ -22,7 +22,7 @@ import operaciones.OperacionesJugador;
 import recursos.Fuentes;
 
 public class VentanaCargarPartida extends JPanel {
-
+    
     private JTable tabla;
     private DefaultTableModel modelo;
     private JPasswordField campoPin;
@@ -31,7 +31,6 @@ public class VentanaCargarPartida extends JPanel {
     private List<Jugador> jugadores;
 
     public VentanaCargarPartida() {
-
         setLayout(null);
         setBackground(Color.decode("#2e2e2e"));
         setPreferredSize(new Dimension(460, 420));
@@ -108,7 +107,8 @@ public class VentanaCargarPartida extends JPanel {
         add(btnCargar);
 
         // ===== EVENTO =====
-        btnCargar.addActionListener(e -> cargarPartida());
+        btnCargar.addActionListener(e -> 
+            cargarPartida());
     }
 
     private void cargarTabla() {
@@ -141,8 +141,8 @@ public class VentanaCargarPartida extends JPanel {
             return;
         }
 
-        MusicaAdmi music = new MusicaAdmi();
-
+        MusicaAdmi music= MusicaAdmi.getInstance();;
+        music.detenerMusica();
         JDialog dialogoJuego = new JDialog();
         VentanaJuego juego = new VentanaJuego(music, seleccionado);
 
@@ -151,5 +151,7 @@ public class VentanaCargarPartida extends JPanel {
         dialogoJuego.setLocationRelativeTo(null);
         dialogoJuego.setModal(true);
         dialogoJuego.setVisible(true);
+        java.awt.Window ventana = javax.swing.SwingUtilities.getWindowAncestor(this);
+        ventana.dispose();   // Cierra solo la ventana
     }
 }

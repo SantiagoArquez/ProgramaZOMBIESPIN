@@ -35,7 +35,7 @@ public class VentanaJuego extends JPanel {
     public VentanaJuego(MusicaAdmi music, Jugador jugador) {
         this.music = music;
         this.jugador = jugador;
-        
+        music.detenerMusica();
         setLayout(null);
         setBackground(Color.decode("#1e1e1e"));
 
@@ -314,6 +314,8 @@ public class VentanaJuego extends JPanel {
         panelJ.add(meButton);
 
         meButton.addActionListener(e -> {
+        music.detenerMusica();
+        music.Sonarmusica("/musica/Menu.wav");
         javax.swing.SwingUtilities.getWindowAncestor(this).dispose();
         });
         
@@ -384,7 +386,7 @@ public class VentanaJuego extends JPanel {
             animacion.start();
         });
     }
-private ImageIcon getImagen(int valor) {
+    private ImageIcon getImagen(int valor) {
 
     return switch (valor) {
 
