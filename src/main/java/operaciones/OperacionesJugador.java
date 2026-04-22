@@ -65,9 +65,19 @@ public class OperacionesJugador {
             jugadores = new ArrayList<>();
         }
     }
+    // ================== OBTENER RANKING ==================
+    public static List<Jugador> obtenerRanking() {
 
+    ArbolRanking ranking = new ArbolRanking();
+
+    for (Jugador j : jugadores) {
+        ranking.insertar(j);
+    }
+
+    return ranking.obtenerRanking();
+    }
     // ================== FORZAR GUARDADO ==================
     public static void actualizarArchivo() {
-        guardarArchivo();
+    guardarArchivo();
     }
 }

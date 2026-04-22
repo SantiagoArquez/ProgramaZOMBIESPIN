@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import datos.MusicaAdmi;
+import operaciones.OperacionesJugador;
 import recursos.Fuentes;
 
 public final class VentanaMenu extends JFrame {
@@ -171,7 +172,7 @@ public final class VentanaMenu extends JFrame {
 
         continuar.addActionListener(e -> {
             JDialog cargarDialog = new JDialog(this, "CARGAR PARTIDA", true);
-            VentanaCargarPartida cargar = new VentanaCargarPartida();
+            VentanaCargarPartida cargar = new VentanaCargarPartida(OperacionesJugador.obtenerRanking());
             cargarDialog.setContentPane(cargar);
 
             cargarDialog.setSize(460, 420);

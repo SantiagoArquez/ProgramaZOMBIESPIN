@@ -15,6 +15,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import datos.Jugador;
 import datos.MusicaAdmi;
@@ -30,7 +32,8 @@ public class VentanaCargarPartida extends JPanel {
 
     private List<Jugador> jugadores;
 
-    public VentanaCargarPartida() {
+    public VentanaCargarPartida(List<Jugador> jugadores) {
+        this.jugadores = jugadores;
         setLayout(null);
         setBackground(Color.decode("#2e2e2e"));
         setPreferredSize(new Dimension(460, 420));
@@ -49,7 +52,7 @@ public class VentanaCargarPartida extends JPanel {
         add(titulo);
 
         // ===== TABLA =====
-        String[] columnas = {"NOMBRE", "NIVEL", "SALDO"};
+        String[] columnas = {"PUESTO","NOMBRE", "NIVEL", "SALDO", "ÚLTIMA VEZ"};
         modelo = new DefaultTableModel(columnas, 0);
 
         tabla = new JTable(modelo);
@@ -109,22 +112,28 @@ public class VentanaCargarPartida extends JPanel {
         // ===== EVENTO =====
         btnCargar.addActionListener(e -> 
             cargarPartida());
-    }
-
-    private void cargarTabla() {
-
-        jugadores = OperacionesJugador.obtenerTodos();
-
-        for (Jugador j : jugadores) {
-            modelo.addRow(new Object[]{
-                    j.getNombre().toUpperCase(),
-                    j.getNivel(),
-                    j.getSaldo()
-            });
         }
-    }
 
-    private void cargarPartida() {
+        private void cargarTabla() {
+
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        int puesto = 1;
+        for (Jugador j : jugadores) {
+        String ultima = (j.getUltimaVezJugado() == 0)
+                ? "SOLO JUGO UNA VEZ"
+                : formato.format(new Date(j.getUltimaVezJugado()));
+        modelo.addRow(new Object[]{
+                puesto,
+                j.getNombre().toUpperCase(),
+                j.getNivel(),
+                j.getSaldo(),
+                ultima
+        });
+        puesto++;
+        }
+        }
+
+        private void cargarPartida() {
 
         int fila = tabla.getSelectedRow();
 
@@ -137,9 +146,12 @@ public class VentanaCargarPartida extends JPanel {
         Jugador seleccionado = jugadores.get(fila);
 
         if (!seleccionado.getContrapin().equals(pinIngresado)) {
-            JOptionPane.showMessageDialog(this, "PIN incorrecto");
-            return;
+        JOptionPane.showMessageDialog(this, "PIN incorrecto");
+        return;
         }
+
+        seleccionado.setUltimaVezJugado(System.currentTimeMillis());
+        OperacionesJugador.actualizarArchivo();
 
         MusicaAdmi music= MusicaAdmi.getInstance();;
         music.detenerMusica();

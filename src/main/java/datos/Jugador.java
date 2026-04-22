@@ -23,4 +23,5 @@ public class Jugador implements Serializable {
     @Builder.Default
     private int nivel = 1;
     private String contrapin;
+    private long ultimaVezJugado;
 }
