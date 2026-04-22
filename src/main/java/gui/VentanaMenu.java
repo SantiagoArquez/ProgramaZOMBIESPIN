@@ -22,6 +22,7 @@ public final class VentanaMenu extends JFrame {
     private JLabel dedo;
     private JTextField titulo;
     private JTextField titulo2;
+    private boolean musicaActiva = true;
     private MusicaAdmi music = MusicaAdmi.getInstance();
 
     // posición base del dedo
@@ -63,7 +64,7 @@ public final class VentanaMenu extends JFrame {
         titulo = new JTextField("ZOMBIEZPIN");
         titulo.setBounds(240, 40, 500, 90);
         titulo.setFont(Fuentes.loadFont("/fonts/StormGust.ttf", 100));
-        titulo.setForeground(Color.decode("#013501"));
+        titulo.setForeground(Color.decode("#00a300"));
         titulo.setBackground(new Color(0, 0, 0, 0));
         titulo.setBorder(null);
         titulo.setEditable(false);
@@ -86,27 +87,92 @@ public final class VentanaMenu extends JFrame {
         nuevaPartida = new JButton("NUEVA PARTIDA");
         nuevaPartida.setBounds(380, 150, 200, 71);
         nuevaPartida.setBackground(Color.decode("#2e2e2e"));
-        nuevaPartida.setForeground(Color.decode("#277717"));
+        nuevaPartida.setForeground(Color.decode("#fbff00"));
         nuevaPartida.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 21));
         nuevaPartida.setFocusPainted(false);
+                nuevaPartida.setBorder(null);nuevaPartida.setBorder(
+                javax.swing.BorderFactory.createCompoundBorder(
+                javax.swing.BorderFactory.createLineBorder(Color.decode("#d9dd00"), 2),
+                javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10)
+                )
+        );
         panelJ.add(nuevaPartida);
 
         // ===== BOTON CONTINUAR =====
         continuar = new JButton("CONTINUAR");
         continuar.setBounds(380, 275, 200, 71);
         continuar.setBackground(Color.decode("#2e2e2e"));
-        continuar.setForeground(Color.decode("#277717"));
+        continuar.setForeground(Color.decode("#15ff00"));
         continuar.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 21));
-        continuar.setFocusPainted(false);
+        continuar.setFocusPainted(false);            
+            continuar.setBorder(null);continuar.setBorder(
+            javax.swing.BorderFactory.createCompoundBorder(
+            javax.swing.BorderFactory.createLineBorder(Color.decode("#12dd00"), 2),
+            javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10)
+            )
+        );
+
         panelJ.add(continuar);
 
+                // ===== BOTON <CREDITOS!!> =====
+        JButton creditos = new JButton("CREDITOS");
+        creditos.setBounds(380, 400, 200, 71);
+        creditos.setBackground(Color.decode("#2e2e2e"));
+        creditos.setForeground(Color.decode("#00ffbf"));
+        creditos.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 21));
+        creditos.setFocusPainted(false);
+            creditos.setBorder(null);creditos.setBorder(
+            javax.swing.BorderFactory.createCompoundBorder(
+            javax.swing.BorderFactory.createLineBorder(Color.decode("#00ebb0"), 2),
+            javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10)
+            )
+        );
+        panelJ.add(creditos);
+
+                // ===== BOTON SILENCIAR MUSICA =====
+        JButton MuteMusica=new JButton("SILENCIAR");
+        MuteMusica.setBounds(900, 10, 100, 30);
+        MuteMusica.setBackground(Color.decode("#2e2e2e"));
+        MuteMusica.setForeground(Color.decode("#23d400"));
+        MuteMusica.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 10));
+        MuteMusica.setFocusPainted(false);
+        MuteMusica.setBorder(null);MuteMusica.setBorder(
+            javax.swing.BorderFactory.createCompoundBorder(
+            javax.swing.BorderFactory.createLineBorder(Color.decode("#1eb300"), 2),
+            javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10)
+            )
+        );
+
+        MuteMusica.addActionListener(e -> {
+        if (musicaActiva) {
+            MuteMusica.setText("ACTIVAR");
+            music.detenerMusica();
+            } else {
+                MuteMusica.setText("SILENCIAR");
+                music.Sonarmusica("/musica/Menu.wav");
+            }
+            musicaActiva = !musicaActiva;
+        });
+        panelJ.add(MuteMusica);
+
+        //TEXTO SILENCIAR MUSICA
+        JTextField Silen = new JTextField("MUSICA");
+        Silen.setBounds(800, -20, 110, 90);
+        Silen.setFont(Fuentes.loadFont("/fonts/StormGust.ttf", 30));
+        Silen.setForeground(Color.decode("#23d400"));
+        Silen.setBackground(new Color(0, 0, 0, 0));
+        Silen.setBorder(null);
+        Silen.setEditable(false);
+        Silen.setFocusable(false);
+        Silen.setHorizontalAlignment(JTextField.CENTER);
+        panelJ.add(Silen);
         // ===== DEDO =====
         dedo = new JLabel();
         ImageIcon icon = new ImageIcon(getClass().getResource("/images/mano.png"));
         Image img = icon.getImage().getScaledInstance(230, 180, Image.SCALE_SMOOTH);
         dedo.setIcon(new ImageIcon(img));
 
-        dedo.setBounds(dedoXBase, dedoYBase, 230, 180);
+        dedo.setBounds(dedoXBase+1000, dedoYBase, 230, 180);
         panelJ.add(dedo);
 
         add(panelJ);
@@ -123,7 +189,7 @@ public final class VentanaMenu extends JFrame {
 
             @Override
             public void mouseExited(java.awt.event.MouseEvent e) {
-                moverDedo(dedoXBase, dedoYBase);
+                moverDedo(dedoXBase+1000, dedoYBase);
             }
         });
 
@@ -135,7 +201,18 @@ public final class VentanaMenu extends JFrame {
 
             @Override
             public void mouseExited(java.awt.event.MouseEvent e) {
-                moverDedo(dedoXBase, dedoYBase);
+                moverDedo(dedoXBase+1000, dedoYBase);
+            }
+        });
+        creditos.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent e) {
+                moverDedo(605, 350);
+            }
+
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent e) {
+                moverDedo(dedoXBase+1000, dedoYBase);
             }
         });
 
@@ -193,8 +270,30 @@ public final class VentanaMenu extends JFrame {
 
             cargarDialog.setVisible(true);
         });
-    }
+        creditos.addActionListener(e -> {
+            JDialog crediDialog = new JDialog(this, "ZOMBIEZPIN - CREDITOS", true);
+            VentanaCreditos creditosV = new VentanaCreditos(music);
+            crediDialog.setContentPane(creditosV);
 
+            crediDialog.setSize(1020, 550);
+            crediDialog.setLocationRelativeTo(null);
+                crediDialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosed(java.awt.event.WindowEvent e) {
+                    music.detenerMusica();
+                    music.Sonarmusica("/musica/Menu.wav");
+                }
+
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent e) {
+                    music.detenerMusica();
+                    music.Sonarmusica("/musica/Menu.wav");
+                }
+            });
+
+            crediDialog.setVisible(true);
+        });
+    }
     // mover dedo
     private void moverDedo(int x, int y) {
         dedo.setLocation(x, y);

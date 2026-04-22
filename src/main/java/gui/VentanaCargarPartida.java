@@ -2,6 +2,8 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -15,8 +17,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import datos.Jugador;
 import datos.MusicaAdmi;
@@ -153,11 +153,11 @@ public class VentanaCargarPartida extends JPanel {
         seleccionado.setUltimaVezJugado(System.currentTimeMillis());
         OperacionesJugador.actualizarArchivo();
 
-        MusicaAdmi music= MusicaAdmi.getInstance();;
+        MusicaAdmi music= MusicaAdmi.getInstance();
         music.detenerMusica();
         JDialog dialogoJuego = new JDialog();
         VentanaJuego juego = new VentanaJuego(music, seleccionado);
-
+        dialogoJuego.setTitle("ZOMBIEZPIN - JUEGO");
         dialogoJuego.setContentPane(juego);
         dialogoJuego.setSize(1020, 550);
         dialogoJuego.setLocationRelativeTo(null);

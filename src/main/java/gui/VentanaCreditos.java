@@ -1,5 +1,6 @@
 package gui;
 
+
 import java.awt.Color;
 import java.awt.Image;
 
@@ -10,24 +11,24 @@ import javax.swing.JPanel;
 import datos.MusicaAdmi;
 import recursos.Fuentes;
 
-public class VentanaVictoria extends JPanel {
+public class VentanaCreditos extends JPanel{
 
     private MusicaAdmi music;
 
-
-    public VentanaVictoria(MusicaAdmi music) {
+    public VentanaCreditos(MusicaAdmi music){
         MusicaAdmi.getInstance().detenerMusica();
-        MusicaAdmi.getInstance().Sonarmusica("/musica/Victoria.wav");
         setSize(1020, 550);
         setLayout(null);
         inicializarComponentes();
         this.music = music;
+        music.Sonarmusica("/musica/Creditos.wav");
     }
+    
     private void inicializarComponentes(){
-                JPanel panelJ = new JPanel() {
+        JPanel panelJ = new JPanel() {
 
-            private Image fondoOriginal = new ImageIcon(
-                getClass().getResource("/images/Victoria.png")
+        private Image fondoOriginal = new ImageIcon(
+            getClass().getResource("/images/Creditos.png")
             ).getImage();
             private Image fondoEscalado = fondoOriginal.getScaledInstance(1020, 550, Image.SCALE_SMOOTH);
             @Override
@@ -39,7 +40,7 @@ public class VentanaVictoria extends JPanel {
         panelJ.setLayout(null);
         panelJ.setBounds(0, 0, 1020, 550);
         JButton meButton = new JButton("MENU");
-        meButton.setBounds(400, 300, 200, 71);
+        meButton.setBounds(400, 400, 200, 71);
         meButton.setBackground(Color.decode("#2e2e2e"));
         meButton.setForeground(Color.decode("#07f1a3"));
         meButton.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 30));
@@ -52,7 +53,7 @@ public class VentanaVictoria extends JPanel {
         );
         meButton.addActionListener(e -> {
         music.detenerMusica();
-        music.Sonarmusica("/musica/Menu.wav");
+        music.Sonarmusica("/musica/Creditos.wav");
         javax.swing.SwingUtilities.getWindowAncestor(this).dispose();
         });
         panelJ.add(meButton);

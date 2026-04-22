@@ -23,6 +23,8 @@ public class VentanaNombre extends JPanel {
     private JTextField campoNombre;
     private JPasswordField campoPin;
     private JButton btnValidar;
+    private boolean musicaActiva = true;
+    private MusicaAdmi music = MusicaAdmi.getInstance();
 
     private Jugador jugador;
 
@@ -65,6 +67,33 @@ public class VentanaNombre extends JPanel {
             )
         );
         add(campoNombre);
+
+                // ===== BOTON SILENCIAR MUSICA =====
+                        // ===== BOTON SILENCIAR MUSICA =====
+        JButton MuteMusica=new JButton("SILENCIAR");
+        MuteMusica.setBounds(330, 10, 100, 30);
+        MuteMusica.setBackground(Color.decode("#2e2e2e"));
+        MuteMusica.setForeground(Color.decode("#23d400"));
+        MuteMusica.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 10));
+        MuteMusica.setFocusPainted(false);
+        MuteMusica.setBorder(null);MuteMusica.setBorder(
+            javax.swing.BorderFactory.createCompoundBorder(
+            javax.swing.BorderFactory.createLineBorder(Color.decode("#1eb300"), 2),
+            javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10)
+            )
+        );
+
+        MuteMusica.addActionListener(e -> {
+        if (musicaActiva) {
+            MuteMusica.setText("ACTIVAR");
+            music.detenerMusica();
+            } else {
+                MuteMusica.setText("SILENCIAR");
+                music.Sonarmusica("/musica/NickName.wav");
+            }
+            musicaActiva = !musicaActiva;
+        });
+        add(MuteMusica);
 
         lblPin = new JLabel("PIN");
         lblPin.setBounds(20, 240, 100, 40);

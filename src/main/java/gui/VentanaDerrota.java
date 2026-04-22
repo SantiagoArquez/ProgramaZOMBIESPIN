@@ -1,29 +1,64 @@
 package gui;
 
+import java.awt.Color;
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
+import javax.swing.JPanel;
 
-public class VentanaDerrota extends JFrame {
+import datos.MusicaAdmi;
+import recursos.Fuentes;
 
-    private JButton nuevaPartida;
-    private JButton continuar;
-    private JLabel dedo;
-    private JTextField titulo;
-    private JTextField titulo2;
+public class VentanaDerrota extends JPanel {
 
-    public VentanaDerrota() {
-        setTitle("ZOMBIEZPIN MENU PRINCIPAL");
+    private MusicaAdmi music;
+
+
+    public VentanaDerrota(MusicaAdmi music) {
+        MusicaAdmi.getInstance().detenerMusica();
         setSize(1020, 550);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
         setLayout(null);
-
         inicializarComponentes();
+        this.music = music;
+        music.Sonarmusica("/musica/Derrota.wav");
     }
 
     private void inicializarComponentes() {
 
-}
+        JPanel panelJ = new JPanel() {
+
+            private Image fondoOriginal = new ImageIcon(
+                getClass().getResource("/images/Derrota.png")
+            ).getImage();
+            private Image fondoEscalado = fondoOriginal.getScaledInstance(1020, 550, Image.SCALE_SMOOTH);
+            @Override
+            protected void paintComponent(java.awt.Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(fondoEscalado, 0, 0, this);
+            }
+        };
+        panelJ.setLayout(null);
+        panelJ.setBounds(0, 0, 1020, 550);
+        JButton meButton = new JButton("MENU");
+        meButton.setBounds(400, 300, 200, 71);
+        meButton.setBackground(Color.decode("#2e2e2e"));
+        meButton.setForeground(Color.decode("#970000"));
+        meButton.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 30));
+        meButton.setFocusPainted(false);
+                meButton.setBorder(null);meButton.setBorder(
+            javax.swing.BorderFactory.createCompoundBorder(
+            javax.swing.BorderFactory.createLineBorder(Color.decode("#ff0000"), 2),
+            javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10)
+        )
+        );
+        meButton.addActionListener(e -> {
+        music.detenerMusica();
+        music.Sonarmusica("/musica/Menu.wav");
+        javax.swing.SwingUtilities.getWindowAncestor(this).dispose();
+        });
+        panelJ.add(meButton);
+
+        add(panelJ);
+    }
 }

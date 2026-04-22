@@ -30,6 +30,7 @@ public class VentanaJuego extends JPanel {
     
     // NUEVO
     private Jugador jugador;
+    private boolean musicaActiva = true;
 
     // CONSTRUCTOR NUEVO (recibe jugador)
     public VentanaJuego(MusicaAdmi music, Jugador jugador) {
@@ -212,7 +213,7 @@ public class VentanaJuego extends JPanel {
         // LABEL SALDO MOSTRAR (TEXTO VARIABLE) 
         JLabel saldoJLabel = new JLabel();
         saldoJLabel.setText(String.valueOf(jugador.getSaldo()));
-        saldoJLabel.setBounds(30, 20, 140, 60);
+        saldoJLabel.setBounds(50, 20, 140, 60);
         saldoJLabel.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 30));
         saldoJLabel.setForeground(Color.decode("#c8ff00"));
         saldoJLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -262,7 +263,37 @@ public class VentanaJuego extends JPanel {
             }
             // 2. Ejecutamos la lógica de pago y subida de nivel
             jugador.setSaldo(jugador.getSaldo() - deuda);
+            jugador.setSaldo(jugador.getSaldo() + 2000);
             jugador.setNivel(jugador.getNivel() + 1); // Ahora el jugador es nivel N+1
+            if (jugador.getNivel() > 10) {
+                    JDialog victoriaDialog = new JDialog();
+                    VentanaVictoria victoria = new VentanaVictoria(music);
+
+                    victoriaDialog.setTitle("ZOMBIEZPIN - VICTORIA");
+                    victoriaDialog.setContentPane(victoria);
+                    victoriaDialog.setSize(1020, 550);
+                    victoriaDialog.setLocationRelativeTo(null);
+                    victoriaDialog.setModal(true);
+
+                    // 🔥 CLAVE: cerrar juego cuando se cierre la victoria
+                    victoriaDialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                        @Override
+                        public void windowClosed(java.awt.event.WindowEvent e) {
+                            java.awt.Window ventanaJuego =
+                                    javax.swing.SwingUtilities.getWindowAncestor(VentanaJuego.this);
+                            if (ventanaJuego != null) {
+                                ventanaJuego.dispose();
+                            }
+                        }
+                    });
+
+                    // reproducir música ANTES de mostrar
+                    music.detenerMusica();
+                    music.Sonarmusica("/musica/Victoria.wav");
+
+                    victoriaDialog.setVisible(true);
+                    return;
+                }
             OperacionesJugador.guardar(jugador);
             // 3. IMPORTANTE: Creamos una nueva instancia con el NUEVO nivel 
             // para obtener el cálculo de la deuda siguiente
@@ -274,7 +305,7 @@ public class VentanaJuego extends JPanel {
             panelJ.revalidate();
             panelJ.repaint();
             javax.swing.JOptionPane.showMessageDialog(this,
-                    "¡Subiste de nivel! Ahora eres nivel " + jugador.getNivel());
+                    "¡Subiste de nivel! Ahora eres nivel " + jugador.getNivel() + " !TOMA 2000 SOLES MAS!");
         });
     
 
@@ -318,6 +349,32 @@ public class VentanaJuego extends JPanel {
         music.Sonarmusica("/musica/Menu.wav");
         javax.swing.SwingUtilities.getWindowAncestor(this).dispose();
         });
+
+                // ===== BOTON SILENCIAR MUSICA =====
+        JButton MuteMusica=new JButton("SILENCIAR");
+        MuteMusica.setBounds(20, 70, 100, 30);
+        MuteMusica.setBackground(Color.decode("#2e2e2e"));
+        MuteMusica.setForeground(Color.decode("#23d400"));
+        MuteMusica.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 10));
+        MuteMusica.setFocusPainted(false);
+        MuteMusica.setBorder(null);MuteMusica.setBorder(
+            javax.swing.BorderFactory.createCompoundBorder(
+            javax.swing.BorderFactory.createLineBorder(Color.decode("#1eb300"), 2),
+            javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10)
+            )
+        );
+
+        MuteMusica.addActionListener(e -> {
+        if (musicaActiva) {
+            MuteMusica.setText("ACTIVAR");
+            music.detenerMusica();
+            } else {
+                MuteMusica.setText("SILENCIAR");
+                music.Sonarmusica("/musica/Juego.wav");
+            }
+            musicaActiva = !musicaActiva;
+        });
+        panelJ.add(MuteMusica);
         
 
         // ABRIR VENTANA VALORES (JDialog)
@@ -380,6 +437,7 @@ public class VentanaJuego extends JPanel {
                 }
                 saldoJLabel.setText(String.valueOf(jugador.getSaldo()));
                 jugar.setEnabled(true);
+                verificarDerrota();
                 }
             });
 
@@ -402,5 +460,37 @@ public class VentanaJuego extends JPanel {
         ImageIcon icon = new ImageIcon(getClass().getResource(ruta));
         Image img = icon.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
         return new ImageIcon(img);
+    }
+    // METODO PARA VERIFICAR SI EL JUGADOR PERDIÓ
+    private void verificarDerrota() {
+        if (jugador.getSaldo() < 10) {
+
+            // detener música
+            music.detenerMusica();
+
+            // crear ventana derrota
+            JDialog derrotaDialog = new JDialog();
+            VentanaDerrota derrota = new VentanaDerrota(music);
+
+            derrotaDialog.setTitle("ZOMBIEZPIN - DERROTA");
+            derrotaDialog.setContentPane(derrota);
+            derrotaDialog.setSize(1020, 550);
+            derrotaDialog.setLocationRelativeTo(null);
+            derrotaDialog.setModal(true);
+
+            // cuando cierre derrota recién se cierra el juego
+            derrotaDialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosed(java.awt.event.WindowEvent e) {
+                    java.awt.Window ventanaJuego =
+                            javax.swing.SwingUtilities.getWindowAncestor(VentanaJuego.this);
+                    if (ventanaJuego != null) {
+                        ventanaJuego.dispose();
+                    }
+                }
+            });
+
+            derrotaDialog.setVisible(true);
+        }
     }
 }
