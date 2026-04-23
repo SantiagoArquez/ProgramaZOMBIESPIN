@@ -1,9 +1,11 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -40,36 +42,49 @@ public class VentanaNombre extends JPanel {
     }
 
     private void inicializarComponentes() {
+        JPanel panelJ = new JPanel() {
+
+        private Image fondoOriginal = new ImageIcon(
+            getClass().getResource("/images/nombre.png")
+            ).getImage();
+            private Image fondoEscalado = fondoOriginal.getScaledInstance(460, 420, Image.SCALE_SMOOTH);
+            @Override
+            protected void paintComponent(java.awt.Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(fondoEscalado, 0, 0, this);
+            }
+        };
+        panelJ.setLayout(null);
+        panelJ.setBounds(0, 0, 460, 420);
 
         JLabel titulo = new JLabel("INGREZE ZU NOMBRE");
-        titulo.setBounds(20, 100, 400, 90);
-        titulo.setFont(Fuentes.loadFont("/fonts/StormGust.ttf", 50));
-        titulo.setForeground(Color.decode("#ff0000"));
+        titulo.setBounds(30, 190, 400, 40);
+        titulo.setFont(Fuentes.loadFont("/fonts/StormGust.ttf", 40));
+        titulo.setForeground(Color.decode("#b3ff00"));
         titulo.setHorizontalAlignment(JLabel.CENTER);
-        add(titulo);
+        panelJ.add(titulo);
 
         lblNombre = new JLabel("NOMBRE");
-        lblNombre.setBounds(20, 180, 100, 40);
-        lblNombre.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 18));
-        lblNombre.setForeground(Color.decode("#277717"));
+        lblNombre.setBounds(30,230, 100, 40);
+        lblNombre.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 20));
+        lblNombre.setForeground(Color.decode("#f19d00"));
         lblNombre.setHorizontalAlignment(JLabel.CENTER);
-        add(lblNombre);
+        panelJ.add(lblNombre);
 
         campoNombre = new JTextField();
-        campoNombre.setBounds(130, 180, 220, 40);
-        campoNombre.setForeground(Color.decode("#277717"));
+        campoNombre.setBounds(130, 230, 220, 40);
+        campoNombre.setForeground(Color.decode("#ffbd91"));
         campoNombre.setBackground(Color.decode("#2e2e2e"));
         campoNombre.setHorizontalAlignment(JTextField.CENTER);
         campoNombre.setBorder(
             javax.swing.BorderFactory.createCompoundBorder(
-                javax.swing.BorderFactory.createLineBorder(Color.decode("#277717"), 2),
+                javax.swing.BorderFactory.createLineBorder(Color.decode("#ff6600"), 2),
                 javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10)
             )
         );
-        add(campoNombre);
+        panelJ.add(campoNombre);
 
-                // ===== BOTON SILENCIAR MUSICA =====
-                        // ===== BOTON SILENCIAR MUSICA =====
+        // ===== BOTON SILENCIAR MUSICA =====
         JButton MuteMusica=new JButton("SILENCIAR");
         MuteMusica.setBounds(330, 10, 100, 30);
         MuteMusica.setBackground(Color.decode("#2e2e2e"));
@@ -93,37 +108,39 @@ public class VentanaNombre extends JPanel {
             }
             musicaActiva = !musicaActiva;
         });
-        add(MuteMusica);
+        panelJ.add(MuteMusica);
 
         lblPin = new JLabel("PIN");
-        lblPin.setBounds(20, 240, 100, 40);
-        lblPin.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 18));
-        lblPin.setForeground(Color.decode("#277717"));
+        lblPin.setBounds(30, 280, 100, 40);
+        lblPin.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 20));
+        lblPin.setForeground(Color.decode("#f19d00"));
         lblPin.setHorizontalAlignment(JLabel.CENTER);
-        add(lblPin);
+        panelJ.add(lblPin);
 
         campoPin = new JPasswordField();
-        campoPin.setBounds(130, 240, 220, 40);
-        campoPin.setForeground(Color.decode("#277717"));
+        campoPin.setBounds(130, 280, 220, 40);
+        campoPin.setForeground(Color.decode("#ffbd91"));
         campoPin.setBackground(Color.decode("#2e2e2e"));
         campoPin.setHorizontalAlignment(JTextField.CENTER);
         campoPin.setEchoChar((char) 0);
         campoPin.setBorder(
             javax.swing.BorderFactory.createCompoundBorder(
-                javax.swing.BorderFactory.createLineBorder(Color.decode("#277717"), 2),
+                javax.swing.BorderFactory.createLineBorder(Color.decode("#ff6600"), 2),
                 javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10)
             )
         );
-        add(campoPin);
+        panelJ.add(campoPin);
 
         btnValidar = new JButton("NICKNAME");
-        btnValidar.setBounds(130, 310, 220, 45);
+        btnValidar.setBounds(130, 330, 220, 45);
         btnValidar.setEnabled(false);
         btnValidar.setBackground(Color.decode("#2e2e2e"));
-        btnValidar.setForeground(Color.decode("#277717"));
+        btnValidar.setForeground(Color.decode("#f59300"));
         btnValidar.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 15));
-        btnValidar.setFocusPainted(false);
-        add(btnValidar);
+        btnValidar.setFocusPainted(false); 
+        panelJ.add(btnValidar);
+
+        add(panelJ);
 
         KeyAdapter escuchador = new KeyAdapter() {
             public void keyReleased(KeyEvent e) {

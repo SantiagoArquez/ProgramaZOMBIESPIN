@@ -19,7 +19,7 @@ public class Jugador implements Serializable {
 
     private String nombre;
     @Builder.Default
-    private int saldo = 10;
+    private int saldo = 2000;
     @Builder.Default
     private int nivel = 1;
     private String contrapin;
