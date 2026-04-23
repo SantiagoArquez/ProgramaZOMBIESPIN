@@ -7,8 +7,10 @@ import java.util.Date;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -43,7 +45,18 @@ public class VentanaCargarPartida extends JPanel {
     }
 
     private void inicializarComponentes() {
-
+        java.awt.Window w = javax.swing.SwingUtilities.getWindowAncestor(this);
+        //logo para la parte de continuar
+        if (w instanceof javax.swing.JFrame frame) {
+            frame.setIconImage(new ImageIcon(
+                getClass().getResource("/images/icon.png")
+            ).getImage());
+        }
+        if (w instanceof javax.swing.JDialog dialog) {
+            dialog.setIconImage(new ImageIcon(
+                getClass().getResource("/images/icon.png")
+            ).getImage());
+        }
         // ===== TÍTULO ESTILO ZOMBIE =====
         JLabel titulo = new JLabel("CARGAR PARTIDA");
         titulo.setBounds(25, 10, 550, 40);
@@ -149,21 +162,26 @@ public class VentanaCargarPartida extends JPanel {
         JOptionPane.showMessageDialog(this, "PIN incorrecto");
         return;
         }
+        JFrame frameRaiz = (JFrame) javax.swing.SwingUtilities.getAncestorOfClass(JFrame.class, this);
 
+        JDialog dialogoJuego = new JDialog(frameRaiz, "ZOMBIEZPIN - JUEGO", JDialog.ModalityType.APPLICATION_MODAL);
+        dialogoJuego.setIconImage(frameRaiz.getIconImage());
+        
         seleccionado.setUltimaVezJugado(System.currentTimeMillis());
         OperacionesJugador.actualizarArchivo();
 
         MusicaAdmi music= MusicaAdmi.getInstance();
         music.detenerMusica();
-        JDialog dialogoJuego = new JDialog();
+        JDialog padre = (JDialog) javax.swing.SwingUtilities.getWindowAncestor(this);
+
         VentanaJuego juego = new VentanaJuego(music, seleccionado);
-        dialogoJuego.setTitle("ZOMBIEZPIN - JUEGO");
         dialogoJuego.setContentPane(juego);
         dialogoJuego.setSize(1020, 550);
         dialogoJuego.setLocationRelativeTo(null);
-        dialogoJuego.setModal(true);
         dialogoJuego.setVisible(true);
-        java.awt.Window ventana = javax.swing.SwingUtilities.getWindowAncestor(this);
-        ventana.dispose();   // Cierra solo la ventana
+
+        // Cerrar SOLO la ventana actual (Cargar Partida)
+        java.awt.Window estaVentana = javax.swing.SwingUtilities.getWindowAncestor(this);
+        estaVentana.dispose();
     }
 }

@@ -36,6 +36,10 @@ public final class VentanaMenu extends JFrame {
         setLocationRelativeTo(null);
         setLayout(null);
 
+        Image ico = new ImageIcon(
+        getClass().getResource("/images/icon.png")).getImage();
+        setIconImage(ico);
+
         inicializarComponentes();
 
         music.detenerMusica();
