@@ -8,4 +8,5 @@ public class Main {
             new VentanaMenu().setVisible(true);
         });
     }
+
 }
