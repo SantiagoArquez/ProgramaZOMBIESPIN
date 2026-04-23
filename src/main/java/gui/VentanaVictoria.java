@@ -39,14 +39,14 @@ public class VentanaVictoria extends JPanel {
         panelJ.setLayout(null);
         panelJ.setBounds(0, 0, 1020, 550);
         JButton meButton = new JButton("MENU");
-        meButton.setBounds(400, 300, 200, 71);
+        meButton.setBounds(410, 400, 200, 71);
         meButton.setBackground(Color.decode("#2e2e2e"));
-        meButton.setForeground(Color.decode("#07f1a3"));
+        meButton.setForeground(Color.decode("#5effd7"));
         meButton.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 30));
         meButton.setFocusPainted(false);
                 meButton.setBorder(null);meButton.setBorder(
             javax.swing.BorderFactory.createCompoundBorder(
-            javax.swing.BorderFactory.createLineBorder(Color.decode("#00ff40"), 2),
+            javax.swing.BorderFactory.createLineBorder(Color.decode("#28b191"), 2),
             javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10)
         )
         );

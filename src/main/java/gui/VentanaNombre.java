@@ -58,8 +58,8 @@ public class VentanaNombre extends JPanel {
         panelJ.setBounds(0, 0, 460, 420);
 
         JLabel titulo = new JLabel("INGREZE ZU NOMBRE");
-        titulo.setBounds(30, 190, 400, 40);
-        titulo.setFont(Fuentes.loadFont("/fonts/StormGust.ttf", 40));
+        titulo.setBounds(30, 230, 100, 40);
+        titulo.setFont(Fuentes.loadFont("/fonts/StormGust.ttf", 20));
         titulo.setForeground(Color.decode("#b3ff00"));
         titulo.setHorizontalAlignment(JLabel.CENTER);
         panelJ.add(titulo);

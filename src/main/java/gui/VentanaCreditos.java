@@ -31,7 +31,7 @@ public class VentanaCreditos extends JPanel{
         private Image fondoOriginal = new ImageIcon(
             getClass().getResource("/images/Creditos.png")
             ).getImage();
-            private Image fondoEscalado = fondoOriginal.getScaledInstance(1020, 550, Image.SCALE_SMOOTH);
+            private Image fondoEscalado = fondoOriginal.getScaledInstance(1010, 540, Image.SCALE_SMOOTH);
             @Override
             protected void paintComponent(java.awt.Graphics g) {
                 super.paintComponent(g);
@@ -39,7 +39,7 @@ public class VentanaCreditos extends JPanel{
             }
         };
         panelJ.setLayout(null);
-        panelJ.setBounds(0, 0, 1020, 550);
+        panelJ.setBounds(0, 0, 1010, 540);
 
         JLabel lblNombreS = new JLabel("SHARA MORENO");
         lblNombreS.setBounds(70,120, 180, 40);
@@ -56,42 +56,49 @@ public class VentanaCreditos extends JPanel{
         panelJ.add(Dise);
 
         JLabel lblNombreA = new JLabel("SANTIAGO ARQUEZ");
-        lblNombreA.setBounds(720,90, 180, 40);
+        lblNombreA.setBounds(750,120, 180, 40);
         lblNombreA.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 20));
         lblNombreA.setForeground(Color.decode("#00ff00"));
         lblNombreA.setHorizontalAlignment(JLabel.CENTER);
         panelJ.add(lblNombreA);
 
         JLabel ProArq = new JLabel("(PROGRAMADOR)");
-        ProArq.setBounds(720,110, 180, 40);
+        ProArq.setBounds(750,140, 180, 40);
         ProArq.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 13));
         ProArq.setForeground(Color.decode("#00ff00"));
         ProArq.setHorizontalAlignment(JLabel.CENTER);
         panelJ.add(ProArq);
 
         JLabel lblNombreC = new JLabel("CRISTIAN DIAZ");
-        lblNombreC.setBounds(410,50, 180, 40);
+        lblNombreC.setBounds(420,240, 180, 40);
         lblNombreC.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 20));
         lblNombreC.setForeground(Color.decode("#00ff00"));
         lblNombreC.setHorizontalAlignment(JLabel.CENTER);
         panelJ.add(lblNombreC);
 
         JLabel ProCris = new JLabel("(PROGRAMADOR)");
-        ProCris.setBounds(410,70, 180, 40);
+        ProCris.setBounds(420,260, 180, 40);
         ProCris.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 13));
         ProCris.setForeground(Color.decode("#00ff00"));
         ProCris.setHorizontalAlignment(JLabel.CENTER);
         panelJ.add(ProCris);
+
+        JLabel cred = new JLabel("CREDITOS");
+        cred.setBounds(340,20, 350, 120);
+        cred.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 70));
+        cred.setForeground(Color.decode("#fffb00"));
+        cred.setHorizontalAlignment(JLabel.CENTER);
+        panelJ.add(cred);
         
         JButton meButton = new JButton("MENU");
-        meButton.setBounds(400, 400, 200, 71);
+        meButton.setBounds(440, 140, 140, 50);
         meButton.setBackground(Color.decode("#2e2e2e"));
-        meButton.setForeground(Color.decode("#07f1a3"));
-        meButton.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 30));
+        meButton.setForeground(Color.decode("#fffb00"));
+        meButton.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 20));
         meButton.setFocusPainted(false);
                 meButton.setBorder(null);meButton.setBorder(
             javax.swing.BorderFactory.createCompoundBorder(
-            javax.swing.BorderFactory.createLineBorder(Color.decode("#00ff40"), 2),
+            javax.swing.BorderFactory.createLineBorder(Color.decode("#a6ff00"), 2),
             javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10)
         )
         );
