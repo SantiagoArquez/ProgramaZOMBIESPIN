@@ -29,7 +29,7 @@ public class VentanaCreditos extends JPanel{
         JPanel panelJ = new JPanel() {
 
         private Image fondoOriginal = new ImageIcon(
-            getClass().getResource("/images/Creditos.png")
+            getClass().getResource("/images/CreditosF.png")
             ).getImage();
             private Image fondoEscalado = fondoOriginal.getScaledInstance(1010, 540, Image.SCALE_SMOOTH);
             @Override

@@ -27,7 +27,7 @@ public class VentanaVictoria extends JPanel {
                 JPanel panelJ = new JPanel() {
 
             private Image fondoOriginal = new ImageIcon(
-                getClass().getResource("/images/Victoria.png")
+                getClass().getResource("/images/VictoriaF.png")
             ).getImage();
             private Image fondoEscalado = fondoOriginal.getScaledInstance(1020, 550, Image.SCALE_SMOOTH);
             @Override

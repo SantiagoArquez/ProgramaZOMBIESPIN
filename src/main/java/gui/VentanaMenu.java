@@ -51,7 +51,7 @@ public final class VentanaMenu extends JFrame {
         JPanel panelJ = new JPanel() {
 
             private Image fondoOriginal = new ImageIcon(
-                getClass().getResource("/images/Menu.png")
+                getClass().getResource("/images/MenuF.png")
             ).getImage();
             private Image fondoEscalado = fondoOriginal.getScaledInstance(1020, 550, Image.SCALE_SMOOTH);
             @Override
