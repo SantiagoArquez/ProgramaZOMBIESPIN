@@ -41,7 +41,7 @@ public class VentanaDerrota extends JPanel {
         panelJ.setLayout(null);
         panelJ.setBounds(0, 0, 1020, 550);
         JButton meButton = new JButton("MENU");
-        meButton.setBounds(400, 300, 200, 71);
+        meButton.setBounds(400, 400, 200, 71);
         meButton.setBackground(Color.decode("#2e2e2e"));
         meButton.setForeground(Color.decode("#970000"));
         meButton.setFont(Fuentes.loadFont("/fonts/CurseoftheZombie.ttf", 30));
